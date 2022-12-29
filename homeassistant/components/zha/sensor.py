@@ -604,6 +604,11 @@ class VOCLevel(Sensor):
     models="lumi.airmonitor.acn01",
     stop_on_match_group="voc_level",
 )
+@MULTI_MATCH(
+    channel_names="voc_level",
+    manufacturers="_TZE200_dwcarsat",
+    stop_on_match_group="voc_level",
+)
 class PPBVOCLevel(Sensor):
     """VOC Level sensor."""
 
@@ -628,7 +633,10 @@ class PM25(Sensor):
     _unit = CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
 
 
-@MULTI_MATCH(channel_names="formaldehyde_concentration")
+@MULTI_MATCH(
+    channel_names="formaldehyde_concentration",
+    stop_on_match_group="formaldehyde_concentration",
+)
 class FormaldehydeConcentration(Sensor):
     """Formaldehyde Concentration sensor."""
 
@@ -638,6 +646,22 @@ class FormaldehydeConcentration(Sensor):
     _decimals = 0
     _multiplier = 1e6
     _unit = CONCENTRATION_PARTS_PER_MILLION
+
+
+@MULTI_MATCH(
+    channel_names="formaldehyde_concentration",
+    manufacturers="_TZE200_dwcarsat",
+    stop_on_match_group="formaldehyde_concentration",
+)
+class MUGPCMFormaldehydeConcentration(Sensor):
+    """Formaldehyde Concentration sensor."""
+
+    SENSOR_ATTR = "measured_value"
+    _attr_state_class: SensorStateClass = SensorStateClass.MEASUREMENT
+    _attr_name: str = "Formaldehyde concentration"
+    _decimals = 0
+    _multiplier = 1
+    _unit = CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
 
 
 @MULTI_MATCH(channel_names=CHANNEL_THERMOSTAT, stop_on_match_group=CHANNEL_THERMOSTAT)
